@@ -1,14 +1,13 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route,Navigate} from"react-router-dom"
 import Navbar from './components/Navbar'
-import Home from './components/Home'
+import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
-// import Features from './components/Features'
-// import Pricing from './components/Pricing'
-// import About from './components/About'
-
-
+import Marketplace from './pages/marketplace/marketplace'
+import Profile from './pages/Userprofile/Profile'
+import ProductList from './pages/ProductList/Productlist';
+import AddProduct from './pages/AddProducts/Addproducts'
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +30,21 @@ function App() {
             <Register />
           }
           />
+        
+        <Route
+          path="/marketplace"
+          element={
+            <Marketplace />
+          }
+          />
+        <Route
+          path="/profile"
+          element={
+            <Profile />
+          }
+          />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/add-product" element={<AddProduct />}/>
         
       </Routes>
 

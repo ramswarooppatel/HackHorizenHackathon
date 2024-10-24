@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, FarmerInfo, UserInfo
+from .models import CustomUser, FarmerInfo, UserInfo,Products,Cart
 
 class FarmerInfoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,3 +73,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+
+
+class ProductSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Products
+        fields = ['title', 'desc', 'price', 'quantity'] 
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'

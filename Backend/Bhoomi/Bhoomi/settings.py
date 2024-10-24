@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Your frontend URL
+    # Add other allowed origins if needed
+]
 # Application definition
 REST_FRAMEWORK={
      'DEFAULT_AUTHENTICATION_CLASSES': (
