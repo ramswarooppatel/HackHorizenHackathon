@@ -17,13 +17,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'user_type', 'address', 'farmer_info', 'user_info']
-
+        fields = ['id', 'username','password', 'email', 'user_type', 'address', 'farmer_info', 'user_info']
+        extra_kwargs = {'password': {'write_only': True}} 
     def create(self, validated_data):
         farmer_info_data = validated_data.pop('farmer_info', None)
         user_info_data = validated_data.pop('user_info', None)
         
-        user = CustomUser.objects.create(**validated_data)
+        user = CustomUser(**validated_data)
+        user.set_password(validated_data['password'])  # Set the hashed password
+        user.save()
 
         if farmer_info_data:
             farmer_info = FarmerInfo.objects.create(**farmer_info_data)
@@ -67,3 +69,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     #             instance.user_info = UserInfo.objects.create(**user_info_data)
 
     #     return instance
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
