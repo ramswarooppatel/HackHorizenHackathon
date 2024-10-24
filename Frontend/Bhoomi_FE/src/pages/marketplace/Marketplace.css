@@ -1,0 +1,18 @@
+.main-container{
+    height: 100vh;
+}
+
+.profile-button {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 50%; /* Makes the button circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Remove padding */
+    border: 2px solid #28a745; /* Border color */
+}
+
+.profile-button i {
+    color: #28a745; /* Icon color */
+}

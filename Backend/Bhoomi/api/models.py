@@ -9,6 +9,7 @@ class FarmerInfo(models.Model):
     )
     Farmer_Type = models.CharField(max_length=80, choices=Practices)
     Desc=models.CharField(max_length=500)
+    ratings=models.PositiveIntegerField(default=3)
 class UserInfo(models.Model):
     pass
 
@@ -23,4 +24,18 @@ class CustomUser(AbstractUser):
     farmer_info = models.ForeignKey(FarmerInfo, null=True, blank=True, on_delete=models.SET_NULL)
     user_info = models.ForeignKey(UserInfo, null=True, blank=True, on_delete=models.SET_NULL)
     
+
+class Products(models.Model):
+    owner = models.ForeignKey(FarmerInfo, null=False, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    desc = models.CharField(max_length=200)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    quantity = models.PositiveIntegerField(default=0)  # New field to track stock
+    created_at = models.DateTimeField(auto_now_add=True)  # New field for timestamp
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 

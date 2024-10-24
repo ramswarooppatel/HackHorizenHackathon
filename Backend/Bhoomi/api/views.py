@@ -1,11 +1,17 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from .models import CustomUser
+from rest_framework.permissions import AllowAny,IsAuthenticated 
+from .models import CustomUser,Products,Cart
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from .serializers import CustomUserSerializer,LoginSerializer
+from .serializers import CustomUserSerializer,LoginSerializer,ProductSerializers,CartSerializer
 
+class UserDetailView(generics.RetrieveAPIView):
+    serializer_class = CustomUserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 class UserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
@@ -41,3 +47,33 @@ class LoginView(generics.GenericAPIView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        
+class ProductCreateView(generics.CreateAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializers
+    permission_classes = [IsAuthenticated] # Consider restricting this to authenticated farmers
+
+    def perform_create(self, serializer):
+        # Set the owner to the currently authenticated farmer
+        serializer.save(owner=self.request.user.farmer_info)
+
+class ProductListView(generics.ListAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializers
+    permission_classes = [AllowAny]  # All users can view products
+
+
+class CartAddView(generics.CreateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [AllowAny]  # Consider restricting this to authenticated users
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class CartListView(generics.ListAPIView):
+    serializer_class = CartSerializer
+    permission_classes = [AllowAny]  # Consider restricting this to authenticated users
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)

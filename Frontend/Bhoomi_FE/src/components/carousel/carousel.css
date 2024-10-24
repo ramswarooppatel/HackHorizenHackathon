@@ -1,0 +1,6 @@
+/* Carousel.css */
+.carousel-item img {
+    max-height: 500px; /* Set your desired max height */
+    width: 100%; /* Make sure it fills the width */
+    object-fit: cover; /* Maintain aspect ratio */
+}
