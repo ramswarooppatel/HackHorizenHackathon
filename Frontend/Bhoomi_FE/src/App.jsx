@@ -8,6 +8,7 @@ import Marketplace from './pages/marketplace/marketplace'
 import Profile from './pages/Userprofile/Profile'
 import ProductList from './pages/ProductList/Productlist';
 import AddProduct from './pages/AddProducts/Addproducts'
+import Dashboard from './components/dashboard/dashboard'
 function App() {
   return (
     <BrowserRouter>
@@ -45,7 +46,8 @@ function App() {
           />
           <Route path="/products" element={<ProductList />} />
           <Route path="/add-product" element={<AddProduct />}/>
-        
+          <Route path="/dashboard" element={<Dashboard />}/>
+          
       </Routes>
 
     </BrowserRouter>
