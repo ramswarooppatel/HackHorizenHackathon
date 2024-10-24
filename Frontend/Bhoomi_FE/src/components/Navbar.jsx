@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Navbar.module.css';
+import './Navbar.css'
 
 const Navbar = () => {
   return (
-    <nav className={`navbar navbar-expand-lg ${styles.customNavbar}`}>
+    <nav className={`navbar navbar-expand-lg `}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <span className="brand-text">Bhumi</span>
